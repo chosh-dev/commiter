@@ -1,0 +1,32 @@
+{
+  "name": "commiter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "co": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "dev": "node --enable-source-maps dist/cli/index.js",
+    "start": "node dist/cli/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "dotenv": "^17.2.3",
+    "es-toolkit": "^1.43.0",
+    "openai": "^6.13.0",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^20.0.0",
+    "eslint": "^9.39.2",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.50.0"
+  }
+}
