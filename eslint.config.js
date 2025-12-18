@@ -1,4 +1,5 @@
 import eslint from '@eslint/js';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
@@ -32,11 +33,16 @@ export default tseslint.config(
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      
+
       // General rules
       'no-console': 'off', // CLI tool needs console
       'prefer-const': 'error',
       'no-var': 'error',
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+    },
+    plugins: {
+      'simple-import-sort': simpleImportSort,
     },
   }
 );
