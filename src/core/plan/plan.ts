@@ -169,10 +169,19 @@ const printCommitBlock = (
 };
 
 const resolveHunkFiles = (hunkIds: string[], allHunks: Hunk[]): string[] => {
-  return hunkIds.map((id) => {
+  const seen = new Set<string>();
+  const files: string[] = [];
+
+  for (const id of hunkIds) {
     const hunk = allHunks.find((h) => h.id === id);
-    return hunk ? hunk.filePath : id;
-  });
+    const filePath = hunk ? hunk.filePath : id;
+
+    if (seen.has(filePath)) continue;
+    seen.add(filePath);
+    files.push(filePath);
+  }
+
+  return files;
 };
 
 const printNotes = (plan: CommitPlan) => {
