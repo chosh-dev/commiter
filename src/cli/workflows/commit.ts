@@ -81,7 +81,7 @@ export const applyCommitPlan = (plan: CommitPlan, allHunks: Hunk[]): void => {
     try {
       applyPatchCached(patch);
       gitCommit(commit.message);
-      console.log(chalk.gray(`Applied: ${commit.message}`));
+      console.log(chalk.gray(`✓ ${commit.message}`));
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
       console.log(chalk.red(`Failed: ${commit.message} (${msg})`));
@@ -91,5 +91,5 @@ export const applyCommitPlan = (plan: CommitPlan, allHunks: Hunk[]): void => {
     }
   }
 
-  console.log(chalk.green("\nAll commits applied"));
+  console.log(chalk.green("\n✓ All commits applied"));
 };
