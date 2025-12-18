@@ -14,11 +14,7 @@ export const printPlanSummary = (plan: CommitPlan, allHunks: Hunk[]) => {
 const printHeader = (plan: CommitPlan) => {
   console.log("");
   console.log(chalk.cyan.bold("=== Commit Plan Summary ==="));
-  console.log(
-    chalk.gray(
-      `Total commits: ${plan.summary.total_commits} | Total hunks: ${plan.summary.total_hunks}`
-    )
-  );
+  console.log(chalk.gray(`Total commits: ${plan.summary.total_commits}`));
   console.log("");
 };
 
@@ -31,9 +27,7 @@ const printCommitBlock = (
   console.log(chalk.dim("─".repeat(40)));
 
   console.log(
-    `${chalk.gray(`[${index}/${total}]`)} ${chalk.bold(
-      commit.commit_id
-    )}  ${chalk.white(commit.message)}`
+    `${chalk.bold(`[${index}/${total}]`)} ${chalk.white(commit.message)}`
   );
 
   const files = resolveHunkFiles(commit.hunks, allHunks);
