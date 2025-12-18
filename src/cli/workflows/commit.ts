@@ -19,7 +19,7 @@ export const ensureGitDiffHasHunks = () => {
   const diff = getGitDiff(mode);
 
   if (!diff.trim()) {
-    return exitWithWarning("변경사항(diff)이 없습니다.");
+    return exitWithWarning("No changes (diff) found.");
   }
 
   const files = parseUnifiedDiff(diff);
@@ -27,7 +27,7 @@ export const ensureGitDiffHasHunks = () => {
 
   if (!allHunks.length) {
     return exitWithWarning(
-      "hunk를 찾지 못했습니다. (삭제/rename/binary 위주 diff일 수 있음)"
+      "No hunks found (diff may be mostly delete/rename/binary)."
     );
   }
 
