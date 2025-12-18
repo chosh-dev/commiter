@@ -75,3 +75,27 @@ export const stageAllChanges = (): void => {
 export const getUnstagedSummary = (): string => {
   return execGit(["status", "--porcelain"]);
 };
+
+export const getRecentCommitMessages = (
+  limit: number
+): { hash: string; message: string }[] => {
+  const RS = "\x1E"; // record separator
+  const US = "\x1F"; // unit separator
+
+  const raw = tryGit(
+    ["log", "-n", String(limit), `--pretty=format:%h${US}%s${RS}`],
+    { trim: true }
+  );
+
+  if (!raw) return [];
+
+  return raw
+    .split(RS)
+    .map((r) => r.trim())
+    .filter(Boolean)
+    .map((record) => {
+      const [hash = "", message = ""] = record.split(US);
+      return { hash: hash.trim(), message: message.trim() };
+    })
+    .filter(({ hash, message }) => Boolean(hash && message));
+};

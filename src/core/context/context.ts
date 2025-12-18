@@ -1,7 +1,12 @@
-import { getBranchName, getRepoNameGuess } from "@/core/git/git.js";
+import {
+  getBranchName,
+  getRecentCommitMessages,
+  getRepoNameGuess,
+} from "@/core/git/git.js";
 import { AnalysisContext, FileDiff, Hunk } from "@/type.js";
 
 const PREVIEW_DEFAULT_LIMIT = 200;
+const RECENT_COMMIT_LIMIT = 5;
 
 export const createAnalysisContext = ({
   files,
@@ -33,6 +38,7 @@ export const createAnalysisContext = ({
       diff_mode: mode,
       generated_at: new Date().toISOString(),
     },
+    recent_commits: getRecentCommitMessages(RECENT_COMMIT_LIMIT),
     preferences: {
       commit_style: "conventional",
       prefer_split: ["docs", "tests", "migrations", "ci"],

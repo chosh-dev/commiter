@@ -48,6 +48,10 @@ export type AnalysisContext = {
     generated_at: string;
     preview_line_limit_per_hunk?: number;
   };
+  recent_commits: Array<{
+    hash: string;
+    message: string;
+  }>;
   preferences: {
     commit_style: "conventional" | "free";
     prefer_split: string[];
