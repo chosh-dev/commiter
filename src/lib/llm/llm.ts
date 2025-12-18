@@ -1,6 +1,6 @@
+import { exitWithError } from "../../utils/errors.js";
 import { BedrockClient } from "./clients/bedrock.js";
 import { OpenAIClient } from "./clients/openai.js";
-import { exitWithError } from "../../utils/errors.js";
 import { resolveProvider } from "./helpers/provider.js";
 import { LlmClient } from "./types.js";
 

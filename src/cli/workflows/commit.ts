@@ -1,17 +1,18 @@
+import chalk from "chalk";
+
+import { createAnalysisContext } from "@/core/context/context.js";
 import {
-  getGitDiff,
   applyPatchCached,
-  resetCached,
+  getGitDiff,
   gitCommit,
+  resetCached,
 } from "@/core/git/git.js";
 import { parseUnifiedDiff } from "@/core/parser/parser.js";
-import { DiffMode, FileDiff, CommitPlan, Hunk } from "@/type.js";
-import { createAnalysisContext } from "@/core/context/context.js";
+import { buildPatchFromHunkIds } from "@/core/patch/patch.js";
 import { generateCommitPlan } from "@/core/plan/plan.js";
 import { createLLMClientFromEnv } from "@/lib/llm/llm.js";
-import { buildPatchFromHunkIds } from "@/core/patch/patch.js";
+import { CommitPlan, DiffMode, FileDiff, Hunk } from "@/type.js";
 import { exitWithWarning, logWarning } from "@/utils/errors.js";
-import chalk from "chalk";
 
 export const ensureGitDiffHasHunks = () => {
   const stagedDiff = getGitDiff("cached");

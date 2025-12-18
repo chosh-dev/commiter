@@ -1,15 +1,17 @@
 import chalk from "chalk";
+
 import { assertGitRepo, resetCached } from "@/core/git/git.js";
-import { Args, CommitPlan } from "@/type.js";
 import { printPlanSummary, savePlan } from "@/core/plan/plan.js";
+import { Args, CommitPlan } from "@/type.js";
+import { logWarning } from "@/utils/errors.js";
+
 import { getBooleanFlag, getStringFlag } from "../helpers/args.js";
 import { askConfirm } from "../helpers/readline.js";
 import {
+  applyCommitPlan,
   ensureGitDiffHasHunks,
   generateCommitPlanWithLLM,
-  applyCommitPlan,
 } from "../workflows/commit.js";
-import { logWarning } from "@/utils/errors.js";
 
 type CmdCommitOptions = {
   savePlan: boolean;

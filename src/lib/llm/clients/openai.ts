@@ -1,8 +1,9 @@
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
+
+import { parseCommitStrategy } from "../helpers/parse.js";
 import { buildPlannerPrompt } from "../prompt.js";
 import { CommitStrategy, CommitStrategySchema } from "../schema.js";
-import { parseCommitStrategy } from "../helpers/parse.js";
 import { CommitRequest, LlmClient } from "../types.js";
 
 export class OpenAIClient implements LlmClient {

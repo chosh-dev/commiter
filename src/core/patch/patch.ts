@@ -1,6 +1,7 @@
+import { groupBy } from "es-toolkit";
+
 import type { Hunk } from "@/type.js";
 import { inferMode } from "@/utils/mode.js";
-import { groupBy } from "es-toolkit";
 
 const buildModifiedFilePatch = (filePath: string, hunks: Hunk[]): string => {
   const a = `a/${filePath}`;

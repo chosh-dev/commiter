@@ -1,4 +1,5 @@
 import chalk from "chalk";
+
 import type { CommitPlan, Hunk } from "../../type.js";
 
 export const printPlanSummary = (plan: CommitPlan, allHunks: Hunk[]) => {

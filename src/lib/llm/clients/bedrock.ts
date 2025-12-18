@@ -3,9 +3,10 @@ import {
   ConverseCommand,
   Message,
 } from "@aws-sdk/client-bedrock-runtime";
+
+import { parseCommitStrategy } from "../helpers/parse.js";
 import { buildPlannerPrompt } from "../prompt.js";
 import { CommitStrategy } from "../schema.js";
-import { parseCommitStrategy } from "../helpers/parse.js";
 import { CommitRequest, LlmClient } from "../types.js";
 
 export class BedrockClient implements LlmClient {

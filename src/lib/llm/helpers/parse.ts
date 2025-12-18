@@ -1,5 +1,6 @@
-import { CommitStrategy, CommitStrategySchema } from "../schema.js";
 import { safeJsonParse } from "@/utils/json.js";
+
+import { CommitStrategy, CommitStrategySchema } from "../schema.js";
 
 export const parseCommitStrategy = (raw: string): CommitStrategy => {
   const parsed = safeJsonParse(raw);

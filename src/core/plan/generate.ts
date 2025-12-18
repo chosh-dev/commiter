@@ -1,6 +1,8 @@
 import { sum, uniq } from "es-toolkit";
-import type { CommitPlan } from "../../type.js";
+
 import { CommitStrategy } from "@/lib/llm/schema.js";
+
+import type { CommitPlan } from "../../type.js";
 
 export const generateCommitPlan = (args: {
   commitStrategy: CommitStrategy;

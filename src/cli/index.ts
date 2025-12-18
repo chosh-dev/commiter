@@ -1,8 +1,9 @@
 import "dotenv/config";
+
 import chalk from "chalk";
 
-import { cmdHelp } from "./commands/help.js";
 import { cmdCommit } from "./commands/commit.js";
+import { cmdHelp } from "./commands/help.js";
 import { parseArgs } from "./helpers/args.js";
 
 const main = async () => {

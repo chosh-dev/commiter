@@ -1,17 +1,17 @@
 import type { ChangeType, FileDiff } from "../../type.js";
-import {
-  isDiffHeaderLine,
-  isHunkHeaderLine,
-  isPlusPathLine,
-  isMinusPathLine,
-} from "./helpers/lineType.js";
+import { buildHunkId } from "./helpers/id.js";
 import {
   countLineChanges,
   extractContextHint,
-  normalizePlusPath,
   normalizeMinusPath,
+  normalizePlusPath,
 } from "./helpers/line.js";
-import { buildHunkId } from "./helpers/id.js";
+import {
+  isDiffHeaderLine,
+  isHunkHeaderLine,
+  isMinusPathLine,
+  isPlusPathLine,
+} from "./helpers/lineType.js";
 
 export const parseUnifiedDiff = (diffText: string): FileDiff[] => {
   const lines = diffText.split("\n");

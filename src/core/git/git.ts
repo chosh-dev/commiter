@@ -1,4 +1,5 @@
 import { DiffMode } from "@/type.js";
+
 import { execGit, tryGit } from "./helpers/exec.js";
 
 const COMMON_DIFF_ARGS = ["--no-color", "--unified=3"] as const;

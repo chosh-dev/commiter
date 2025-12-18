@@ -1,5 +1,7 @@
 import fs from "node:fs";
+
 import chalk from "chalk";
+
 import type { CommitPlan } from "../../type.js";
 
 export const savePlan = (plan: CommitPlan, outPath: string) => {
