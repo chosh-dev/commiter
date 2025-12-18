@@ -27,6 +27,11 @@ export const cmdCommit = async (flags: Args) => {
 
   // 1. Context & Diff Analysis
   const { mode, files, allHunks } = ensureGitDiffHasHunks();
+  console.log("");
+  console.log(chalk.cyan.bold("=== File Changed Summary ==="));
+  console.log(
+    chalk.gray(`Total files: ${files.length} | Total hunks: ${allHunks.length}`)
+  );
 
   // 2. LLM Generation & Plan Validation
   let plan: CommitPlan;
