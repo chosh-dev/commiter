@@ -10,6 +10,7 @@ import { createAnalysisContext } from "@/core/context/context.js";
 import { generateCommitPlan } from "@/core/plan/plan.js";
 import { createLLMClientFromEnv } from "@/lib/llm/llm.js";
 import { buildPatchFromHunkIds } from "@/core/patch/patch.js";
+import { exitWithWarning, logWarning } from "@/utils/errors.js";
 import chalk from "chalk";
 
 export const ensureGitDiffHasHunks = () => {
@@ -18,20 +19,16 @@ export const ensureGitDiffHasHunks = () => {
   const diff = getGitDiff(mode);
 
   if (!diff.trim()) {
-    console.log(chalk.yellow("변경사항(diff)이 없습니다."));
-    process.exit(0);
+    return exitWithWarning("변경사항(diff)이 없습니다.");
   }
 
   const files = parseUnifiedDiff(diff);
   const allHunks = files.flatMap((f) => f.hunks);
 
   if (!allHunks.length) {
-    console.log(
-      chalk.yellow(
-        "hunk를 찾지 못했습니다. (삭제/rename/binary 위주 diff일 수 있음)"
-      )
+    return exitWithWarning(
+      "hunk를 찾지 못했습니다. (삭제/rename/binary 위주 diff일 수 있음)"
     );
-    process.exit(0);
   }
 
   return { mode, diff, files, allHunks };
@@ -74,7 +71,7 @@ export const applyCommitPlan = (plan: CommitPlan, allHunks: Hunk[]): void => {
     });
 
     if (!patch.trim()) {
-      console.log(chalk.yellow(`Skip: ${commit.message} (empty patch)`));
+      logWarning(`Skip: ${commit.message} (empty patch)`);
       continue;
     }
 
@@ -85,7 +82,7 @@ export const applyCommitPlan = (plan: CommitPlan, allHunks: Hunk[]): void => {
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
       console.log(chalk.red(`Failed: ${commit.message} (${msg})`));
-      console.log(chalk.yellow("Rolling back staged changes"));
+      logWarning("Rolling back staged changes");
       resetCached();
       process.exit(1);
     }

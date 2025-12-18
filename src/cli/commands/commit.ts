@@ -9,6 +9,7 @@ import {
   generateCommitPlanWithLLM,
   applyCommitPlan,
 } from "../workflows/commit.js";
+import { logWarning } from "@/utils/errors.js";
 
 type CmdCommitOptions = {
   savePlan: boolean;
@@ -54,7 +55,7 @@ export const cmdCommit = async (flags: Args) => {
   // 5. Confirmation
   const confirmed = await askConfirm(chalk.bold("Apply these commits? [Y/n] "));
   if (!confirmed) {
-    console.log(chalk.yellow("Aborted."));
+    logWarning("Aborted by user.");
     if (mode === "cached") {
       resetCached();
     }
