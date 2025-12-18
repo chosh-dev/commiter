@@ -65,9 +65,7 @@ export const resetCached = (): void => {
 };
 
 export const gitCommit = (message: string): void => {
-  execGit(["commit", "-m", message], {
-    stdio: "inherit",
-  });
+  execGit(["commit", "-m", message]);
 };
 
 export const stageAllChanges = (): void => {
