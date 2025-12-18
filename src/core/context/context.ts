@@ -1,7 +1,7 @@
 import { getBranchName, getRepoNameGuess } from "@/core/git/git.js";
 import { AnalysisContext, FileDiff, Hunk } from "@/type.js";
 
-const PREVIEW_DEFAULT_LIMIT = 20;
+const PREVIEW_DEFAULT_LIMIT = 200;
 
 export const createAnalysisContext = ({
   files,
