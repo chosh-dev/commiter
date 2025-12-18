@@ -25,7 +25,7 @@ export const assertGitRepo = (): void => {
   try {
     execGit(["rev-parse", "--is-inside-work-tree"]);
   } catch {
-    throw new Error("현재 디렉토리는 git repo가 아닙니다.");
+    throw new Error("Current directory is not a git repo.");
   }
 };
 

@@ -55,10 +55,10 @@ const isChangedLine = (line: string): boolean =>
   (line.startsWith("+") || line.startsWith("-")) && !isDiffHeaderLine(line);
 
 const buildPreview = (hunk: Hunk, limit: number): string[] => {
-  // 첫 줄은 hunk header (@@ ...) 이므로 제외
+  // Skip the first line because it is the hunk header (@@ ...)
   const bodyLines = hunk.lines.slice(1);
 
-  // 변경된 라인(+ 또는 -)만 포함
+  // Include only changed lines (+ or -)
   const changedLines = bodyLines.filter(isChangedLine);
 
   return changedLines.slice(0, limit);

@@ -7,7 +7,7 @@ export type Hunk = {
   id: string;
   filePath: string;
   header: string;
-  lines: string[]; // hunk header 포함
+  lines: string[]; // includes the hunk header
   added: number;
   deleted: number;
   contextHint: string;

@@ -29,7 +29,7 @@ export const generateCommitPlan = (args: {
   const notes: string[] = [];
   const allHunks = new Set(allHunkIds);
 
-  // 1) unknown hunk 제거
+  // 1) Remove unknown hunk ids
   for (const commit of plan.commits) {
     const before = commit.hunks.length;
     commit.hunks = commit.hunks.filter((id) => allHunks.has(id));
@@ -39,7 +39,7 @@ export const generateCommitPlan = (args: {
     }
   }
 
-  // 2) 중복 제거 (첫 등장만 유지)
+  // 2) Deduplicate hunks (keep the first appearance)
   const seen = new Set<string>();
   const duplicated: string[] = [];
 
@@ -63,7 +63,7 @@ export const generateCommitPlan = (args: {
     notes.push(`duplicate hunks deduped: ${uniqueDup.join(", ")}`);
   }
 
-  // 3) 누락된 hunk 찾기
+  // 3) Find missing hunks
   const missing = allHunkIds.filter((id) => !seen.has(id));
   if (missing.length) {
     plan.diagnostics.unassigned_hunks = uniq([
@@ -73,7 +73,7 @@ export const generateCommitPlan = (args: {
     notes.push(`unassigned hunks detected: ${missing.length}`);
   }
 
-  // 4) 커밋이 0개면 fallback 단일 커밋 생성
+  // 4) If there are zero commits, create a fallback single commit
   if (plan.commits.length === 0) {
     plan.commits.push({
       commit_id: "c1",
@@ -82,7 +82,7 @@ export const generateCommitPlan = (args: {
     });
     notes.push("fallback single commit created");
   } else if (missing.length) {
-    // 5) 누락된 hunk들은 misc 커밋으로 모으기
+    // 5) Group missing hunks into a misc commit
     plan.commits.push({
       commit_id: `c${plan.commits.length + 1}`,
       message: "feat: apply changes",
@@ -91,7 +91,7 @@ export const generateCommitPlan = (args: {
     notes.push("misc commit created for missing hunks");
   }
 
-  // 6) summary 재계산
+  // 6) Recalculate summary
   const totalHunksAssigned = sum(
     plan.commits.map((commit) => commit.hunks.length)
   );
@@ -105,7 +105,7 @@ export const generateCommitPlan = (args: {
     );
   }
 
-  // diagnostics.notes에 메모 합치기
+  // Merge notes into diagnostics.notes
   plan.diagnostics.notes = uniq([...plan.diagnostics.notes, ...notes]);
 
   return { plan, notes };

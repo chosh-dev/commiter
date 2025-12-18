@@ -33,7 +33,7 @@ export const parseUnifiedDiff = (diffText: string): FileDiff[] => {
     }
 
     const header = currentHunkHeader;
-    const bodyLines = currentHunkLines.slice(1); // "@@ ... @@" 제외
+    const bodyLines = currentHunkLines.slice(1); // exclude the "@@ ... @@" header
 
     const { added, deleted } = countLineChanges(bodyLines);
     const contextHint = extractContextHint(header, bodyLines);
@@ -67,7 +67,7 @@ export const parseUnifiedDiff = (diffText: string): FileDiff[] => {
   };
 
   for (const line of lines) {
-    // 새로운 diff 시작
+    // Start of a new diff block
     if (isDiffHeaderLine(line)) {
       flushFile();
       continue;
@@ -107,7 +107,7 @@ export const parseUnifiedDiff = (diffText: string): FileDiff[] => {
       flushHunk();
 
       if (!currentFile) {
-        // path 정보 없이 hunk가 오는 경우에 대한 방어
+        // Guard for hunks arriving without path information
         currentFile = {
           filePath: plusPath || minusPath || "unknown",
           changeType: "modified",
@@ -120,7 +120,7 @@ export const parseUnifiedDiff = (diffText: string): FileDiff[] => {
       continue;
     }
 
-    // hunk 본문
+    // hunk body
     if (currentHunkLines) {
       currentHunkLines.push(line);
     }
