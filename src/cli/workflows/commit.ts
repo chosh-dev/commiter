@@ -44,9 +44,7 @@ export const generateCommitPlanWithLLM = async (
   const client = createLLMClientFromEnv();
   const context = createAnalysisContext({ files, mode });
 
-  console.log(
-    chalk.gray(`Analyzing changes with LLM (${client.modelName})...`)
-  );
+  console.log(chalk.gray(`\nAnalyzing changes with ${client.modelName}`));
 
   const commitStrategy = await client.createCommitStrategy({
     inputPrompt: JSON.stringify(context),
@@ -76,24 +74,22 @@ export const applyCommitPlan = (plan: CommitPlan, allHunks: Hunk[]): void => {
     });
 
     if (!patch.trim()) {
-      console.log(chalk.yellow(`Skipping ${commit.commit_id} (empty patch)`));
+      console.log(chalk.yellow(`Skip: ${commit.message} (empty patch)`));
       continue;
     }
 
     try {
       applyPatchCached(patch);
       gitCommit(commit.message);
-      console.log(
-        chalk.green(`✔ Committed ${commit.commit_id}: ${commit.message}`)
-      );
+      console.log(chalk.gray(`Applied: ${commit.message}`));
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
-      console.log(chalk.red(`Failed ${commit.commit_id}: ${msg}`));
-      console.log(chalk.yellow("Rolling back staged changes..."));
+      console.log(chalk.red(`Failed: ${commit.message} (${msg})`));
+      console.log(chalk.yellow("Rolling back staged changes"));
       resetCached();
       process.exit(1);
     }
   }
 
-  console.log(chalk.green.bold("\nAll commits applied successfully!"));
+  console.log(chalk.green("\nAll commits applied"));
 };
