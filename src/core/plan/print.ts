@@ -27,38 +27,55 @@ const printCommitBlock = (
   console.log(chalk.dim("─".repeat(40)));
 
   console.log(
-    `${chalk.bold(`[${index}/${total}]`)} ${chalk.white(commit.message)}`
+    `${chalk.gray(`[${index}/${total}]`)} ${chalk.white(commit.message)}`
   );
 
-  const files = resolveHunkFiles(commit.hunks, allHunks);
+  const fileStats = getFileStats(commit.hunks, allHunks);
 
-  console.log(`  ${chalk.gray("files")} ${chalk.dim(`(${files.length})`)}`);
-
-  if (files.length === 0) {
-    console.log(`    ${chalk.dim("(none)")}`);
+  if (fileStats.length === 0) {
+    console.log(`  ${chalk.dim("(no files)")}`);
   } else {
-    for (const file of files) {
-      console.log(`    ${chalk.dim("-")} ${chalk.gray(file)}`);
+    for (const file of fileStats) {
+      const perFileAdded = file.added
+        ? chalk.green(`+${file.added}`)
+        : chalk.dim("+0");
+      const perFileDeleted = file.deleted
+        ? chalk.red(`-${file.deleted}`)
+        : chalk.dim("-0");
+
+      console.log(
+        `  ${chalk.dim("-")} ${chalk.gray(
+          file.filePath
+        )} ${perFileAdded} ${perFileDeleted}`
+      );
     }
   }
 
   console.log("");
 };
 
-const resolveHunkFiles = (hunkIds: string[], allHunks: Hunk[]): string[] => {
-  const seen = new Set<string>();
-  const files: string[] = [];
+const getFileStats = (
+  hunkIds: string[],
+  allHunks: Hunk[]
+): Array<{ filePath: string; added: number; deleted: number }> => {
+  const acc: Map<string, { filePath: string; added: number; deleted: number }> =
+    new Map();
+  const order: string[] = [];
 
   for (const id of hunkIds) {
     const hunk = allHunks.find((h) => h.id === id);
-    const filePath = hunk ? hunk.filePath : id;
-
-    if (seen.has(filePath)) continue;
-    seen.add(filePath);
-    files.push(filePath);
+    if (!hunk) continue;
+    const filePath = hunk.filePath;
+    if (!acc.has(filePath)) {
+      order.push(filePath);
+      acc.set(filePath, { filePath, added: 0, deleted: 0 });
+    }
+    const entry = acc.get(filePath)!;
+    entry.added += hunk.added;
+    entry.deleted += hunk.deleted;
   }
 
-  return files;
+  return order.map((filePath) => acc.get(filePath)!);
 };
 
 const printNotes = (plan: CommitPlan) => {
