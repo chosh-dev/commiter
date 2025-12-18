@@ -1,5 +1,7 @@
 # Commiter
 
+![intro](public/intro.png)
+
 **Turn messy diffs into clean, intentional commits — once, with confidence.**
 
 `commiter` is a CLI that analyzes your git diffs, plans **semantic commit units**, and applies them in order after a single confirmation.
@@ -26,6 +28,8 @@ But writing those commits by hand — especially from messy diffs — is slow, e
 ---
 
 ## Why not an agent?
+
+![why](public/why.png)
 
 Most agent-based tools optimize for autonomy.
 `commiter` optimizes for **predictability**.
