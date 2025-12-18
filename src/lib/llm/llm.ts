@@ -25,13 +25,17 @@ export const createLLMClientFromEnv = (): LlmClient => {
     return new BedrockClient(model, region, baseUrl);
   }
 
-  const baseUrl = process.env.LLM_BASE_URL || "https://api.openai.com/v1";
-  const apiKey = process.env.LLM_API_KEY;
-  const model = process.env.LLM_MODEL || "gpt-5-mini";
+  const baseUrl =
+    process.env.OPENAI_BASE_URL ||
+    process.env.LLM_BASE_URL ||
+    "https://api.openai.com/v1";
+  const apiKey = process.env.OPENAI_API_KEY || process.env.LLM_API_KEY;
+  const model =
+    process.env.OPENAI_MODEL || process.env.LLM_MODEL || "gpt-5-mini";
 
   if (!apiKey) {
     return exitWithError(
-      "Error: LLM client could not be initialized. Check LLM_API_KEY."
+      "Error: LLM client could not be initialized. Check OPENAI_API_KEY."
     );
   }
 
