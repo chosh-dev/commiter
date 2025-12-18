@@ -90,7 +90,7 @@ pnpm build
 ```bash
 export LLM_PROVIDER=openai          # or bedrock
 export OPENAI_API_KEY=sk-...
-export OPENAI_MODEL=gpt-5-mini      # optional (default provided)
+export OPENAI_MODEL=gpt-5.2         # optional (default provided)
 ```
 
 _(For Bedrock: set `BEDROCK_REGION`, `BEDROCK_MODEL`, `BEDROCK_BASE_URL`, etc.)_
