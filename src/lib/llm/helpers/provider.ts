@@ -1,4 +1,4 @@
-import chalk from "chalk";
+import { logWarning } from "@/utils/errors.js";
 
 type Provider = "openai" | "bedrock";
 
@@ -9,10 +9,8 @@ export const resolveProvider = (): Provider => {
     return provider;
   }
 
-  console.log(
-    chalk.yellow(
-      `Unknown LLM_PROVIDER "${provider}". Falling back to OpenAI configuration.`
-    )
+  logWarning(
+    `Unknown LLM_PROVIDER "${provider}". Falling back to OpenAI configuration.`
   );
 
   return "openai";
