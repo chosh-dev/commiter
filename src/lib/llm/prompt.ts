@@ -15,8 +15,8 @@ Rules:
 
 For each commit:
 - Write a concise one-line commit message
-- Use an imperative verb
-- Focus on intent, not implementation
+- Use an imperative mood
+- Focus on intent, rather than implementation
 - Match the style of recent_commits
 
 Output:
