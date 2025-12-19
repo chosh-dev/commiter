@@ -1,6 +1,6 @@
 # Commiter
 
-![intro](public/intro.png)
+![intro](https://raw.githubusercontent.com/chosh-dev/commiter/refs/heads/main/public/intro.png)
 
 **Turn messy diffs into clean, intentional commits — once, with confidence.**
 
@@ -29,7 +29,7 @@ But writing those commits by hand — especially from messy diffs — is slow, e
 
 ## Why not an agent?
 
-![why](public/why.png)
+![why](https://raw.githubusercontent.com/chosh-dev/commiter/refs/heads/main/public/why.png)
 
 Most agent-based tools optimize for autonomy.
 `commiter` optimizes for **predictability**.
