@@ -1,5 +1,5 @@
 {
-  "name": "commiter",
+  "name": "@chosh/commiter",
   "version": "0.1.0",
   "private": false,
   "type": "module",
@@ -29,6 +29,9 @@
     "README.md",
     "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.679.0",
     "chalk": "^5.3.0",
