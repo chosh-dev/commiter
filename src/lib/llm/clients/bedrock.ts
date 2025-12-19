@@ -9,20 +9,35 @@ import { buildPlannerPrompt } from "../prompt.js";
 import { CommitStrategy } from "../schema.js";
 import { CommitRequest, LlmClient } from "../types.js";
 
+type BedrockCredentials = {
+  accessKeyId: string;
+  secretAccessKey: string;
+  sessionToken?: string;
+};
+
 export class BedrockClient implements LlmClient {
   private client: BedrockRuntimeClient;
 
   constructor(
     private model: string,
     private region: string,
-    private baseUrl?: string
+    private baseUrl?: string,
+    credentials?: BedrockCredentials
   ) {
-    const clientConfig: { region: string; endpoint?: string } = {
+    const clientConfig: {
+      region: string;
+      endpoint?: string;
+      credentials?: BedrockCredentials;
+    } = {
       region: this.region,
     };
 
     if (this.baseUrl) {
       clientConfig.endpoint = this.baseUrl;
+    }
+
+    if (credentials) {
+      clientConfig.credentials = credentials;
     }
 
     this.client = new BedrockRuntimeClient(clientConfig);
