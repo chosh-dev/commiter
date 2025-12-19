@@ -108,7 +108,7 @@ COMMITER_AWS_SECRET_ACCESS_KEY=YOUR_SECRET_ACCESS_KEY
 COMMITER_AWS_SESSION_TOKEN=YOUR_SESSION_TOKEN
 ```
 
-Global install? `npm i -g commiter` (or `pnpm add -g commiter`) and run `commiter ...` from your repo root. The CLI loads `.env` from the current working directory; if you keep it elsewhere, prefix your command with `DOTENV_CONFIG_PATH=/path/to/.env`.
+Global install? `npm i -g @chosh/commiter` (or `pnpm add -g @chosh/commiter`) and run `commiter ...` from your repo root. The CLI loads `.env` from the current working directory; if you keep it elsewhere, prefix your command with `DOTENV_CONFIG_PATH=/path/to/.env`.
 
 ### 4) Run
 
