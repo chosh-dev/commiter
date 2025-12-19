@@ -16,11 +16,13 @@ import {
 type CmdCommitOptions = {
   savePlan: boolean;
   outPath: string;
+  auto: boolean;
 };
 
 const getOptionsFromFlags = (flags: Args): CmdCommitOptions => ({
   savePlan: getBooleanFlag(flags, "save-plan"),
   outPath: getStringFlag(flags, "out", "plan.json")!,
+  auto: getBooleanFlag(flags, "auto"),
 });
 
 export const cmdCommit = async (flags: Args) => {
@@ -55,7 +57,9 @@ export const cmdCommit = async (flags: Args) => {
   printPlanSummary(plan, allHunks);
 
   // 5. Confirmation
-  const confirmed = await askConfirm(chalk.bold("Apply these commits? [Y/n] "));
+  const confirmed =
+    options.auto ||
+    (await askConfirm(chalk.bold("Apply these commits? [Y/n] ")));
   if (!confirmed) {
     logWarning("Aborted by user.");
     if (mode === "cached") {
