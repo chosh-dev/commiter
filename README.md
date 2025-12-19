@@ -118,7 +118,7 @@ pnpm start -- commit --save-plan --out plan.json
 
 # Using installed binaries
 commiter commit --save-plan
-co c --out plan.json
+cm c --out plan.json
 ```
 
 ### 5) What you’ll see
