@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
+  "description": "CLI that groups git hunks into semantic, reviewable commits using OpenAI or Bedrock.",
+  "keywords": [
+    "git",
+    "cli",
+    "commit",
+    "llm"
+  ],
+  "license": "MIT",
+  "main": "./dist/cli/index.js",
   "bin": {
     "commiter": "./dist/cli/index.js",
     "cm": "./dist/cli/index.js"
