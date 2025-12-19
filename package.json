@@ -11,6 +11,11 @@
     "llm"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/chosh-dev/commiter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chosh-dev/commiter.git"
+  },
   "main": "./dist/cli/index.js",
   "bin": {
     "commiter": "./dist/cli/index.js",
