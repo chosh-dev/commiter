@@ -85,15 +85,30 @@ pnpm install
 pnpm build
 ```
 
-### 3) Configure environment variables
+### 3) Configure environment variables (.env recommended)
 
-```bash
-export LLM_PROVIDER=openai          # or bedrock
-export OPENAI_API_KEY=sk-...
-export OPENAI_MODEL=gpt-5.2         # optional (default provided)
+Create a `.env` in the repo where you run `commiter` (works the same for global installs):
+
+```env
+# OpenAI
+COMMITER_LLM_PROVIDER=openai
+COMMITER_OPENAI_API_KEY=sk-...
+COMMITER_OPENAI_MODEL=gpt-5.2               # optional (default provided)
+COMMITER_OPENAI_BASE_URL=https://api.openai.com/v1 # optional
+
+# Bedrock
+COMMITER_LLM_PROVIDER=bedrock
+COMMITER_BEDROCK_REGION=us-east-1           # optional (default provided)
+COMMITER_BEDROCK_MODEL=claude-4.5-sonnet    # optional (default provided)
+COMMITER_BEDROCK_BASE_URL=https://bedrock-runtime.us-east-1.amazonaws.com # optional
+# Optional Bedrock credentials (use either a profile or access keys)
+COMMITER_AWS_PROFILE=default
+COMMITER_AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY
+COMMITER_AWS_SECRET_ACCESS_KEY=YOUR_SECRET_ACCESS_KEY
+COMMITER_AWS_SESSION_TOKEN=YOUR_SESSION_TOKEN
 ```
 
-_(For Bedrock: set `BEDROCK_REGION`, `BEDROCK_MODEL`, `BEDROCK_BASE_URL`, etc.)_
+Global install? `npm i -g commiter` (or `pnpm add -g commiter`) and run `commiter ...` from your repo root. The CLI loads `.env` from the current working directory; if you keep it elsewhere, prefix your command with `DOTENV_CONFIG_PATH=/path/to/.env`.
 
 ### 4) Run
 
