@@ -22,7 +22,7 @@
     "start": "node dist/cli/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepublishOnly": "pnpm run build"
+    "prepack": "pnpm run build"
   },
   "files": [
     "dist",
