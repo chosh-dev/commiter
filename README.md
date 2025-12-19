@@ -119,6 +119,9 @@ pnpm start -- commit --save-plan --out plan.json
 # Using installed binaries
 commiter commit --save-plan
 cm c --out plan.json
+
+# Non-interactive (skip confirmation)
+commiter commit --auto
 ```
 
 ### 5) What you’ll see
