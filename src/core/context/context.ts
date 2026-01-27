@@ -3,10 +3,11 @@ import {
   getRecentCommitMessages,
   getRepoNameGuess,
 } from "@/core/git/git.js";
+import {
+  PREVIEW_LINE_LIMIT,
+  RECENT_COMMIT_LIMIT,
+} from "@/lib/llm/constants.js";
 import { AnalysisContext, FileDiff, Hunk } from "@/type.js";
-
-const PREVIEW_DEFAULT_LIMIT = 200;
-const RECENT_COMMIT_LIMIT = 5;
 
 export const createAnalysisContext = ({
   files,
@@ -26,7 +27,7 @@ export const createAnalysisContext = ({
         header: hunk.header,
         context: hunk.contextHint || "",
         stats: { added: hunk.added, deleted: hunk.deleted },
-        preview: buildPreview(hunk, PREVIEW_DEFAULT_LIMIT),
+        preview: buildPreview(hunk, PREVIEW_LINE_LIMIT),
       });
     }
   }

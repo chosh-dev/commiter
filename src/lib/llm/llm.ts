@@ -1,6 +1,12 @@
 import { exitWithError } from "../../utils/errors.js";
 import { BedrockClient } from "./clients/bedrock.js";
 import { OpenAIClient } from "./clients/openai.js";
+import {
+  BEDROCK_DEFAULT_MODEL,
+  BEDROCK_DEFAULT_REGION,
+  OPENAI_DEFAULT_BASE_URL,
+  OPENAI_DEFAULT_MODEL,
+} from "./constants.js";
 import { resolveProvider } from "./helpers/provider.js";
 import { LlmClient } from "./types.js";
 
@@ -12,10 +18,9 @@ export const createLLMClientFromEnv = (): LlmClient => {
 
   if (provider === "bedrock") {
     const region =
-      process.env.COMMITER_BEDROCK_REGION ?? "us-east-1";
+      process.env.COMMITER_BEDROCK_REGION ?? BEDROCK_DEFAULT_REGION;
     const baseUrl = process.env.COMMITER_BEDROCK_BASE_URL;
-    const model =
-      process.env.COMMITER_BEDROCK_MODEL ?? "claude-4.5-sonnet";
+    const model = process.env.COMMITER_BEDROCK_MODEL ?? BEDROCK_DEFAULT_MODEL;
     const accessKeyId = process.env.COMMITER_AWS_ACCESS_KEY_ID;
     const secretAccessKey = process.env.COMMITER_AWS_SECRET_ACCESS_KEY;
     const sessionToken = process.env.COMMITER_AWS_SESSION_TOKEN;
@@ -23,7 +28,7 @@ export const createLLMClientFromEnv = (): LlmClient => {
 
     if (!region) {
       exitWithError(
-        "Error: COMMITER_BEDROCK_REGION is required when using Bedrock."
+        "Error: COMMITER_BEDROCK_REGION is required when using Bedrock.",
       );
     }
 
@@ -40,13 +45,13 @@ export const createLLMClientFromEnv = (): LlmClient => {
   }
 
   const baseUrl =
-    process.env.COMMITER_OPENAI_BASE_URL ?? "https://api.openai.com/v1";
+    process.env.COMMITER_OPENAI_BASE_URL ?? OPENAI_DEFAULT_BASE_URL;
   const apiKey = process.env.COMMITER_OPENAI_API_KEY;
-  const model = process.env.COMMITER_OPENAI_MODEL ?? "gpt-5.2";
+  const model = process.env.COMMITER_OPENAI_MODEL ?? OPENAI_DEFAULT_MODEL;
 
   if (!apiKey) {
     return exitWithError(
-      "Error: LLM client could not be initialized. Check COMMITER_OPENAI_API_KEY."
+      "Error: LLM client could not be initialized. Check COMMITER_OPENAI_API_KEY.",
     );
   }
 

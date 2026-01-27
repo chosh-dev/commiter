@@ -5,6 +5,7 @@ import {
   SystemContentBlock,
 } from "@aws-sdk/client-bedrock-runtime";
 
+import { BEDROCK_MAX_TOKENS, BEDROCK_TEMPERATURE } from "../constants.js";
 import { parseCommitStrategy } from "../helpers/parse.js";
 import { withRetry } from "../helpers/retry.js";
 import { buildPlannerPrompt } from "../prompt.js";
@@ -51,8 +52,8 @@ export class BedrockClient implements LlmClient {
 
   async createCommitStrategy(req: CommitRequest): Promise<CommitStrategy> {
     const inferenceConfig = {
-      maxTokens: 4096,
-      temperature: 0.2,
+      maxTokens: BEDROCK_MAX_TOKENS,
+      temperature: BEDROCK_TEMPERATURE,
     };
 
     const system: SystemContentBlock[] = [{ text: buildPlannerPrompt() }];
@@ -66,7 +67,8 @@ export class BedrockClient implements LlmClient {
 
     const command = new ConverseCommand({
       modelId: this.model,
-      messages: conversation,
+      messages,
+      system,
       inferenceConfig,
     });
 
