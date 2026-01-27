@@ -59,7 +59,6 @@ The LLM only helps decide _how to group it_.
 - Detects staged and unstaged changes and splits diffs into **hunk-level units**
 - Generates a commit plan via OpenAI or Bedrock and validates it against a strict JSON schema
 - Automatically repairs common LLM failures:
-
   - duplicate hunk assignments
   - missing or invalid references
   - illegal groupings
@@ -108,7 +107,14 @@ COMMITER_AWS_SECRET_ACCESS_KEY=YOUR_SECRET_ACCESS_KEY
 COMMITER_AWS_SESSION_TOKEN=YOUR_SESSION_TOKEN
 ```
 
-Global install? `npm i -g @chosh.dev/commiter` (or `pnpm add -g @chosh.dev/commiter`) and run `commiter ...` from your repo root. The CLI loads `.env` from the current working directory; if you keep it elsewhere, prefix your command with `DOTENV_CONFIG_PATH=/path/to/.env`.
+Global install? `npm i -g @chosh.dev/commiter` (or `pnpm add -g @chosh.dev/commiter`) and run `commiter ...` from your repo root.
+
+The CLI loads configuration in the following order:
+
+1.  **Local `.env`**: Located in the current working directory (highest priority).
+2.  **Global `.env`**: Located at `~/.commiter/.env` (fallback).
+
+This allows you to set common keys (like `COMMITER_OPENAI_API_KEY`) globally while overriding them per project if needed.
 
 ### 4) Run
 
@@ -140,7 +146,6 @@ commiter commit --auto
 2. Feeds recent commit messages to the model to anchor tone and format
 3. Validates the response against a strict JSON schema
 4. Repairs common failures:
-
    - removes unknown hunks
    - deduplicates assignments
    - isolates unassigned hunks into a warning commit
