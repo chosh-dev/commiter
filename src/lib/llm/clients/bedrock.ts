@@ -6,6 +6,7 @@ import {
 } from "@aws-sdk/client-bedrock-runtime";
 
 import { parseCommitStrategy } from "../helpers/parse.js";
+import { withRetry } from "../helpers/retry.js";
 import { buildPlannerPrompt } from "../prompt.js";
 import { CommitStrategy } from "../schema.js";
 import { CommitRequest, LlmClient } from "../types.js";
@@ -69,7 +70,7 @@ export class BedrockClient implements LlmClient {
       inferenceConfig,
     });
 
-    const response = await this.client.send(command);
+    const response = await withRetry(() => this.client.send(command));
     const content = response.output?.message?.content;
     const rawText = content?.[0].text;
 
