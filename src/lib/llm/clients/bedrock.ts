@@ -2,6 +2,7 @@ import {
   BedrockRuntimeClient,
   ConverseCommand,
   Message,
+  SystemContentBlock,
 } from "@aws-sdk/client-bedrock-runtime";
 
 import { parseCommitStrategy } from "../helpers/parse.js";
@@ -22,7 +23,7 @@ export class BedrockClient implements LlmClient {
     private model: string,
     private region: string,
     private baseUrl?: string,
-    credentials?: BedrockCredentials
+    credentials?: BedrockCredentials,
   ) {
     const clientConfig: {
       region: string;
@@ -53,11 +54,9 @@ export class BedrockClient implements LlmClient {
       temperature: 0.2,
     };
 
-    const conversation: Message[] = [
-      {
-        role: "assistant",
-        content: [{ text: buildPlannerPrompt() }],
-      },
+    const system: SystemContentBlock[] = [{ text: buildPlannerPrompt() }];
+
+    const messages: Message[] = [
       {
         role: "user",
         content: [{ text: req.inputPrompt }],
