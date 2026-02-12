@@ -1,0 +1,4 @@
+interface:
+  display_name: "Commiter"
+  short_description: "Plan semantic commits from mixed git diffs"
+  default_prompt: "Use $commiter to split current git changes into semantic commits and apply them safely."
